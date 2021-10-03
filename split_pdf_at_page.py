@@ -4,51 +4,56 @@ import sys
 import fitz
 import os
 
-
 pdf_file = sys.argv[1]
-split_page = sys.argv[2]
+split_page = int(sys.argv[2])
 
-def check_validity():
-   
-#    print(len(all_pdfs))
-#    try:    
-#       len(all_pdfs) > 1
-#    except:
-#       print('usage: merge_pdfs.py first.pdf second.pdf third.pdf etc.')
-#       print("ERROR: You need at least 2 pdf files to use this program.")
-#       sys.exit(0)       
-   
-   # temp_list = []  
-   
-   # for index in range(0,len(all_pdfs)): 
-   #    try:
-   #       temp_list[index] = fitz.open(all_pdfs[index])
-   #       temp_list[index].close()
-   #    except:
-   #       print("ERROR: Parsed files must have the format of .pdf.")
-   #       sys.exit(0) 
-   
-#    return
-    
+# def check_validity():
 
-def split_pdf(pdf_input,page):
+#    # for index in range(0,len(all_pdfs)): 
+#    #    try:
+#    #       temp_list[index] = fitz.open(all_pdfs[index])
+#    #       temp_list[index].close()
+#    #    except:
+#    #       print("ERROR: Parsed files must have the format of .pdf.")
+#    #       sys.exit(0) 
+
+
+# #    try:    
+# #       split_page is int
+# #    except:
+# #       print('usage: split_pdf_at_page.py given_file.pdf <page number>')
+# #       print("ERROR: You need to input one pdf file and splitting page to use this program.")
+# #       sys.exit(0)    
+   
+# #    return
+
+
+def split_pdf(pdf_to_split,split_page):
        
-   merged_pdf = fitz.open()
-    
-   for pdf in pdfs_input:
-      with fitz.open(pdf) as mfile:
-         merged_pdf.insertPDF(mfile)
+   split_pdf = fitz.open(pdf_to_split)    
+   first_part = fitz.open()
+   second_part = fitz.open()
+   
+   first_part.insert_pdf(split_pdf, to_page = split_page-1)
+   second_part.insert_pdf(split_pdf, from_page = split_page)
+   split_pdf.close()
          
-   desired_name = input("How do you want to name the merged file: ")         
-   merged_pdf.save(desired_name)
-   merged_pdf.close()
-   print("Merged pdf has been saved!")
+   first_name = input("How do you want to name the first file(name.pdf): ")         
+   first_part.save(first_name)
+   first_part.close()
+   
+   second_name = input("How do you want to name the second file(name.pdf): ")
+   second_part.save(second_name)
+   second_part.close()
+   
+   print("PDF has been split and both parts were saved!")
    return   
 
 
 def main():
-   
-   check_validity()
+       
+   print("Program that splits given PDFs at the desired page(including), and then outputs two remaining files.")
+   # check_validity()
    split_pdf(pdf_file,split_page)
 
    

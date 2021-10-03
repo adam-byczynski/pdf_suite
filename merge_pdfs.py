@@ -48,6 +48,7 @@ def merge_pdfs(pdfs_input):
 
 def main():
    
+   print("Program that merges PDFs in the order of them being written down in command-line.")
    check_validity()
    merge_pdfs(all_pdfs)
 
