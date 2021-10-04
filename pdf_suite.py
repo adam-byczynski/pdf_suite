@@ -2,10 +2,15 @@
 
 import os
 from msvcrt import getch
-import pdf_engine
+
+
+#imports of own pdf scripts
+import merge_pdfs
+import split_pdf_at_page
 
 ENTER_KEYCODE = 13
 ESCAPE_KEYCODE = 27
+
 
 def initial_setup():
       os.system('cls')
@@ -20,7 +25,6 @@ def initial_setup():
             elif key_pressed == ESCAPE_KEYCODE:
                   quit()
                   
-pdf_engine.costam
 
 def quit_or_play():
         print("Press Enter to play again, or Escape to quit...")
